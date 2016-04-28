@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox fx:id="vBoxSort" alignment="BOTTOM_CENTER" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+   <children>
+      <Canvas fx:id="canvasSort" height="300.0" layoutY="6.0" width="210.0" AnchorPane.bottomAnchor="141.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="6.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="50.0" text="Пузырек" textAlignment="CENTER" />
+      <Button fx:id="buttonStart" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#reDraw" prefHeight="25.0" prefWidth="59.0" text="Старт" textAlignment="CENTER" />
+      <Button disable="true" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Пауза" textAlignment="CENTER">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+</VBox>
