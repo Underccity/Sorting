@@ -22,78 +22,60 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import sorting.*;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class Main extends Application {
 
-    public static final int NUMBER_OF_SORTINGS=4;
-    public static final int ARRAY_SIZE=20;
-    public static final int [] unsortedMass=new int[ARRAY_SIZE];
-    public static void main(String[] args) {
-        launch(args);
-    }
+    //<Sorting settings>
+
+    //Для добавления отрисовки новой сортировки добавить класс этой сортировки в массив sortings,
+    private static final Class[] sortings = new Class[]
+            {BubbleSort.class, InsertionSort.class, QuickSort.class, SelectionSort.class};
+    private static final int NUMBER_OF_SORTINGS = sortings.length;
+    private static final int ARRAY_SIZE = 40;
+    public static final int PAUSE_BETWEEN_REDRAW=800;
+    public static final int MAX_ARRAY_VALUE=100;
+    //</Sorting settings>
+
+    public static Controller[] controllers = new Controller[NUMBER_OF_SORTINGS];
+    public static final int[] unsortedMass = new int[ARRAY_SIZE];
+    public static final Object monitor = new Object();
+    public static Thread mainThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        //Заполнение массива
         HBox hBox = new HBox();
-
-
-        Random random=new Random();
-
-        Button []ca=new Button[NUMBER_OF_SORTINGS];
-
-        for(int i=0;i<ARRAY_SIZE;i++){
-            unsortedMass[i]=random.nextInt(95)+5;
+        Random random = new Random();
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            unsortedMass[i] = random.nextInt(95) + 5;
         }
 
-        for(int i=0;i<NUMBER_OF_SORTINGS;i++) {
-//            Parent panel = FXMLLoader.load(getClass().getResource("Main.fxml"));
-            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("Main.fxml"));
+        //Отрисовка элементов каждой из сортировок
+        for (int i = 0; i < NUMBER_OF_SORTINGS; i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
             hBox.getChildren().add(fxmlLoader.load());
-            Controller controller=fxmlLoader.getController();
-            //controller.
-
+            Controller controller = fxmlLoader.getController();
+            controller.setSorting((Sorting) sortings[i].getConstructor(int[].class).newInstance(unsortedMass));
+            controller.setLabelSortingName(controller.getSorting().getSortingName());
+            controllers[i] = controller;
+            controllers[i].getSorting().cr = controllers[i];
         }
-        Scene scene= new Scene(hBox);
+        Scene scene = new Scene(hBox);
         primaryStage.setScene(scene);
         primaryStage.show();
+        new Thread(new Loop()).start();
+    }
 
-        /*final int SIZE=2;
+    public static void main(String[] args) {
+        mainThread=Thread.currentThread();
+        launch(args);
 
-        HBox hBoxPane=new HBox();
-        primaryStage.setTitle("Hello World");
-        primaryStage.setResizable(false);
-
-
-        for(int i=0;i<SIZE;i++) {
-            Label label = new Label("Rename me");
-            Button start = new Button("Старт");
-            Button stop = new Button("Пауза");
-            Canvas canvas = new Canvas(300, 500);
-
-            label.setId("Label"+i);
-            start.setId("Start"+i);
-            stop.setId("Stop"+i);
-            canvas.setId("Canvas"+i);
-
-            VBox vBoxPane=new VBox();
-            hBoxPane.getChildren().add(vBoxPane);
-            vBoxPane.getChildren().addAll(canvas, label, start, stop);
-            vBoxPane.setAlignment(Pos.BOTTOM_CENTER);
-        }
-
-
-
-        //System.out.println(vBox.getChildren());
-        primaryStage.setScene(new Scene(hBoxPane));
-        primaryStage.show();
-
-
-*/
     }
 }
 
