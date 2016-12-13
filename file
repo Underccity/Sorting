@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  
+  <xsl:template match="/">
+    <html>
+<style>
+   table {
+    border: 2px solid #0000CD; 
+    margin: auto; }
+  td{ background: #FFB6C1; color: #FF0000; } 
+  </style>
+      <body>
+        <center><h2>Домашние животные</h2></center>
+        <table bordercolor="red" border="2">
+         <tr bgcolor="#6907F1">
+           <th>Вид</th>
+             <th>Кличка</th>
+            <th>Пол</th>
+            <th>Возраст</th>
+            <th>Порода</th>
+            <th>Цвет</th>
+            
+          </tr>
+          <xsl:for-each select="pets/pet">
+            <tr>
+              <td>
+                <xsl:value-of select="kind"/>
+              </td>
+              <td>
+                <xsl:value-of select="name"/>
+              </td>
+              <td>
+                <xsl:value-of select="animal"/>
+              </td>
+               <td>
+                <xsl:value-of select="age"/>
+              </td>
+              <td>
+                <xsl:value-of select="breed"/>
+              </td>
+              <td>
+                <xsl:value-of select="color"/>
+              </td>
+              
+            </tr>
+          </xsl:for-each>
+ 
+        </table>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
